@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 
-import logo from '../../../public/logo.png'
+import logo from '../../public/logo.png'
 
 
 
@@ -11,11 +11,11 @@ const Navbar = () => {
   const links = (
     <>
         <li>
-          <Link href={''}>Workouts</Link>
+          <Link href={'/home'}>Workouts</Link>
         </li>
 
         <li>
-          <Link href={''}>My Plan</Link>
+          <Link href={'/plan'}>My Plan</Link>
         </li>
     </>
   );
@@ -53,15 +53,15 @@ const Navbar = () => {
 
         <div className='flex items-center justify-center gap-[-5]'>
           <Image src={logo} alt={logo} className="w-5 h-5 font-extrabold" />
-          <a className="btn btn-ghost text-xl">FITLOG</a>
+          <Link href={'/home'} className="btn btn-ghost text-xl">FITLOG</Link>
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Plan</a>
-        <a className="btn">Saved</a>
+        <Link href={'/plan'} className="btn">Plan</Link>
+        <Link href={'/plan'} className="btn">Saved</Link>
       </div>
     </div>
   );
