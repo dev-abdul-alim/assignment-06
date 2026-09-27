@@ -1,3 +1,6 @@
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Navbar from "@/components/nav/foot/page";
 import "./globals.css";
 import Footer from "@/components/nav/page";
@@ -13,6 +16,16 @@ export default function RootLayout({ children }) {
           {children}
 
           <Footer />
+
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            pauseOnHover
+            theme="dark"
+          />
         </FitLogProvider>
       </body>
     </html>

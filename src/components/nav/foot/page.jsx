@@ -72,7 +72,7 @@ const Navbar = () => {
 
             <span className="hidden sm:inline">Plan</span>
 
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-black px-1 text-[10px] text-[#c6ff00] sm:h-6 sm:min-w-6 sm:text-xs">
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#c6ff00] px-1 text-[10px] text-black sm:h-6 sm:min-w-6 sm:text-xs">
               {planCount}
             </span>
           </Link>
@@ -80,13 +80,13 @@ const Navbar = () => {
           {/* Saved */}
           <Link
             href="/plan?tab=saved"
-            className="group flex items-center gap-1.5 rounded-full border border-[#38393c] px-3 py-2 text-xs font-black uppercase tracking-wide text-white transition hover:bg-[#1e2019] hover:text-[#c6ff00] sm:px-4 sm:text-sm"
+            className="group flex items-center gap-1.5 rounded-full px-3 py-2 text-xs font-black uppercase tracking-wide text-white transition hover:bg-gray-500  sm:px-4 sm:text-sm"
           >
             {/* <i className="ri-bookmark-line text-base sm:text-lg" /> */}
 
             <span className="hidden sm:inline">Saved</span>
 
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#292d35] px-1 text-[10px] text-white sm:h-6 sm:min-w-6 sm:text-xs">
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full border border-gray-500 px-1 text-[10px] text-white sm:h-6 sm:min-w-6 sm:text-xs">
               {savedCount}
             </span>
           </Link>

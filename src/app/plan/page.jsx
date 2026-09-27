@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useFitLog } from "@/context/FitLogProvider/page";
+import { toast } from "react-toastify";
 
 const MyPlanPage = () => {
   const {
@@ -17,7 +18,26 @@ const MyPlanPage = () => {
 
   const [activeTab, setActiveTab] = useState("plan");
 
-  const currentWorkouts = activeTab === "plan" ? todayPlan : savedWorkouts;
+  const [sortBy, setSortBy] = useState("");
+
+const currentWorkouts = [
+  ...(activeTab === "plan" ? todayPlan : savedWorkouts),
+].sort((a, b) => {
+  if (sortBy === "duration") {
+    return Number(a.duration || 0) - Number(b.duration || 0);
+  }
+
+  if (sortBy === "calories") {
+    return Number(a.caloriesBurned || 0) - Number(b.caloriesBurned || 0);
+  }
+
+  if (sortBy === "rating") {
+    return Number(b.rating || 0) - Number(a.rating || 0);
+  }
+
+  return 0;
+});
+
 
   const totalMinutes = todayPlan.reduce(
     (total, exercise) => total + Number(exercise.duration || 0),
@@ -83,7 +103,7 @@ const MyPlanPage = () => {
         </div>
 
         {/* Tabs */}
-        <div className="mt-10 flex gap-2 border-b border-[#292d35]">
+        <div className="mt-10 flex flex-wrap items-center gap-2 border-b border-[#292d35]">
           <button
             onClick={() => setActiveTab("plan")}
             className={`px-5 py-4 text-sm font-bold uppercase transition ${
@@ -105,6 +125,19 @@ const MyPlanPage = () => {
           >
             Saved
           </button>
+
+          <div className="ml-auto">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="rounded-full border border-[#292d35] bg-[#1a1d23] px-4 py-2 text-sm font-bold uppercase text-[#aeb3bd] outline-none transition focus:border-[#c6ff00]"
+            >
+              <option value="">Sort By</option>
+              <option value="duration">Duration</option>
+              <option value="calories">Calories</option>
+              <option value="rating">Rating</option>
+            </select>
+          </div>
         </div>
 
         {/* Workout List */}
@@ -136,9 +169,27 @@ const WorkoutItem = ({
   removeSaved,
   markAsDone,
 }) => {
+
+const handleMarkAsDone = () => {
+  markAsDone(exercise.id);
+  removeFromPlan(exercise.id);
+
+  toast.success("Workout logged — nice work!");
+};
+
+  const handleRemoveFromPlan = () => {
+    removeFromPlan(exercise.id);
+    toast.info("Removed from today's plan.");
+  };
+
+  const handleRemoveSaved = () => {
+    removeSaved(exercise.id);
+    toast.info("Removed from saved workouts.");
+  };
+
   return (
     <div
-      className={`flex flex-col  gap-5 rounded-2xl border border-[#292d35] bg-[#1a1d23] p-4 sm:flex-row sm:items-center ${
+      className={`flex flex-col gap-5 rounded-2xl border border-[#292d35] bg-[#1a1d23] p-4 sm:flex-row sm:items-center ${
         exercise.completed ? "opacity-60" : ""
       }`}
     >
@@ -177,10 +228,10 @@ const WorkoutItem = ({
       </div>
 
       {/* Actions */}
-      <div className="flex flex-wrap lg:flex-row gap-2 sm:flex-col">
+      <div className="flex flex-wrap gap-2 sm:flex-col lg:flex-row">
         <Link
           href={`/workout/${exercise.id}`}
-          className="rounded-full border border-[#c8ccd6] px-4 py-2 text-center text-sm font-bold uppercase transition hover:border-none"
+          className="rounded-full border border-[#c8ccd6] px-4 py-2 text-center text-sm font-bold uppercase transition hover:border-[#c6ff00]"
         >
           View Details
         </Link>
@@ -188,16 +239,17 @@ const WorkoutItem = ({
         {activeTab === "plan" && (
           <>
             <button
-              onClick={() => removeFromPlan(exercise.id)}
-              // disabled={exercise.completed}
-              className="rounded-full bg-[#c6ff00] px-4 py-2 text-sm font-bold uppercase text-black disabled:cursor-not-allowed disabled:opacity-50"
+              onClick={handleMarkAsDone}
+              disabled={exercise.completed}
+              className="rounded-full bg-[#c6ff00] px-4 py-2 text-sm font-bold uppercase text-black transition hover:bg-[#d5ff4d] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {/* {exercise.completed ? "Done" : "Mark as Done"} */}Mark as done
+              <i className="ri-check-line" />{" "}
+              {exercise.completed ? "Done" : "Mark as done"}
             </button>
 
             <button
-              onClick={() => removeFromPlan(exercise.id)}
-              
+              onClick={handleRemoveFromPlan}
+              className="flex items-center justify-center rounded-full border border-[#292d35] px-3 py-2 text-[#aeb3bd] transition hover:border-red-400 hover:text-red-400"
             >
               <i className="ri-close-line" />
             </button>
@@ -206,8 +258,8 @@ const WorkoutItem = ({
 
         {activeTab === "saved" && (
           <button
-            onClick={() => removeSaved(exercise.id)}
-            // className="rounded-full border border-red-500/40 px-4 py-2 text-sm font-bold uppercase text-red-400 hover:bg-red-500/10"
+            onClick={handleRemoveSaved}
+            className="flex items-center justify-center rounded-full border border-[#292d35] px-3 py-2 text-[#aeb3bd] transition hover:border-red-400 hover:text-red-400"
           >
             <i className="ri-close-line" />
           </button>
@@ -216,6 +268,7 @@ const WorkoutItem = ({
     </div>
   );
 };
+
 
 const EmptyState = ({ activeTab }) => {
   return (

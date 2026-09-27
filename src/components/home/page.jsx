@@ -1,6 +1,13 @@
+import { Oswald } from "next/font/google";
+
 import Image from "next/image";
 import React from "react";
 import heroImg from "../../../public/banner.png";
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
 
 const HeroPage = () => {
   return (
@@ -13,7 +20,7 @@ const HeroPage = () => {
               Workout Library
             </p>
 
-            <h1 className="max-w-150 text-5xl font-black uppercase leading-[0.98] tracking-tight text-[#e7e9ed] sm:text-6xl lg:text-[58px] xl:text-[62px]">
+            <h1 className={`${oswald.className} max-w-150 text-5xl font-bold  uppercase leading-16 tracking-wider text-[#e7e9ed] sm:text-6xl lg:text-[58px] xl:text-[62px]`}>
               Train with intent. log
               <br />
               every set.

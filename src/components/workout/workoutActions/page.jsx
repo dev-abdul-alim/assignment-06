@@ -1,6 +1,7 @@
 "use client";
 
 import { useFitLog } from "@/context/FitLogProvider/page";
+import { toast } from "react-toastify";
 
 const WorkoutActions = ({ exercise }) => {
   const { addToPlan, saveForLater, todayPlan, savedWorkouts, isHydrated } =
@@ -15,25 +16,28 @@ const WorkoutActions = ({ exercise }) => {
     : false;
 
   const handleAddToPlan = () => {
-    const result = addToPlan(exercise);
+    if (!isHydrated) return;
 
-    if (!result.success) {
-      alert(result.message);
+    if (isInPlan) {
+      toast.info("Workout is already in today's plan.");
       return;
     }
 
-    alert(result.message);
+    addToPlan(exercise);
+    toast.success("Workout added to today's plan!");
   };
 
   const handleSave = () => {
+    if (!isHydrated) return;
+
     const result = saveForLater(exercise);
 
     if (!result.success) {
-      alert(result.message);
+      toast.info(result.message);
       return;
     }
 
-    alert(result.message);
+    toast.success(result.message);
   };
 
   return (
@@ -42,25 +46,19 @@ const WorkoutActions = ({ exercise }) => {
       <button
         onClick={handleAddToPlan}
         disabled={!isHydrated}
-        className="flex h-12 w-auto items-center justify-center gap-2 rounded-full bg-[#c6ff00] px-3 py-2 font-bold  tracking-tight text-black transition hover:bg-[#d5ff4d]"
+        className="flex h-12 w-auto items-center justify-center gap-2 rounded-full bg-[#c6ff00] px-3 py-2 font-bold tracking-tight text-black transition hover:bg-[#d5ff4d] disabled:cursor-not-allowed disabled:opacity-50"
       >
         <i className="ri-add-box-fill" />
-        {/* {!isHydrated
-          ? "Loading..."
-          : isInPlan
-            ? "Already in plan"
-            : "Add to today's plan"} */}
-        Add to today&apos; plan
+        Add to today&apos;s plan
       </button>
 
       {/* Save */}
       <button
         onClick={handleSave}
         disabled={!isHydrated}
-        className="flex h-12 w-auto flex-1 items-center justify-center gap-2 rounded-full border border-[#a9ad99] px-3 py-2 font-bold uppercase text-[#f6f7f2] transition hover:border-none"
+        className="flex h-12 w-auto flex-1 items-center justify-center gap-2 rounded-full border border-[#a9ad99] px-3 py-2 font-bold uppercase text-[#f6f7f2] transition hover:border-none disabled:cursor-not-allowed disabled:opacity-50"
       >
         <i className="ri-bookmark-line text-xl" />
-        {/* {!isHydrated ? "Loading..." : isSaved ? "Saved" : "Save for later"} */}
         Save for later
       </button>
     </div>
