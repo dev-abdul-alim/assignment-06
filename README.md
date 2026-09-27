@@ -71,4 +71,3 @@ FitLog is designed to work across different screen sizes with a focused dark fit
 * Responsive workout cards
 * Responsive navigation and layouts
 * Modern dark theme with lime accent colors
-
