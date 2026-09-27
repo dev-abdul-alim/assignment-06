@@ -5,21 +5,21 @@ import heroImg from "../../../public/banner.png";
 const HeroPage = () => {
   return (
     <section className="bg-[#0f1014] px-4 py-8 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-[1110px] overflow-hidden rounded-2xl border border-[#292d35] bg-[#1a1d23]">
-        <div className="grid min-h-[620px] grid-cols-1 lg:grid-cols-2">
+      <div className="mx-auto max-w-277.5 overflow-hidden rounded-2xl border border-[#292d35] bg-[#1a1d23]">
+        <div className="grid min-h-155 grid-cols-1 lg:grid-cols-2">
           {/* LEFT CONTENT */}
           <div className="flex flex-col justify-center px-8 py-14 sm:px-12 lg:px-14">
             <p className="mb-7 text-sm font-bold uppercase tracking-wide text-[#c6ff00]">
               Workout Library
             </p>
 
-            <h1 className="max-w-[600px] text-5xl font-black uppercase leading-[0.98] tracking-tight text-[#e7e9ed] sm:text-6xl lg:text-[58px] xl:text-[62px]">
+            <h1 className="max-w-150 text-5xl font-black uppercase leading-[0.98] tracking-tight text-[#e7e9ed] sm:text-6xl lg:text-[58px] xl:text-[62px]">
               Train with intent. log
               <br />
               every set.
             </h1>
 
-            <p className="mt-7 max-w-[530px] text-base leading-7 text-[#b7bbc4] sm:text-lg">
+            <p className="mt-7 max-w-132.5 text-base leading-7 text-[#b7bbc4] sm:text-lg">
               FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
               into today&apos;s plan, and watch the week&apos;s work add up.
             </p>
@@ -49,7 +49,7 @@ const HeroPage = () => {
           </div>
 
           {/* RIGHT IMAGE */}
-          <div className="relative flex min-h-[400px] items-center justify-center lg:min-h-0">
+          <div className="relative flex min-h-100 items-center justify-center lg:min-h-0">
             <Image
               src={heroImg}
               alt="Workout training"
@@ -57,11 +57,11 @@ const HeroPage = () => {
               className="
                 h-auto
                 w-[85%]
-                max-w-[560px]
+                max-w-140
                 object-contain
                 sm:w-[75%]
                 lg:w-full
-                lg:max-w-[600px]
+                lg:max-w-150
               "
             />
           </div>
