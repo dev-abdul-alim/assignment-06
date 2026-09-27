@@ -65,7 +65,7 @@ const currentWorkouts = [
 
   return (
     <main className="min-h-screen bg-[#0f1014] px-4 py-12 text-[#e7e9ed] sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-[1400px]">
+      <div className="mx-auto max-w-350">
         {/* Header */}
         <div>
           {/* <p className="text-sm font-bold tracking-[0.25em] text-[#c6ff00]">
